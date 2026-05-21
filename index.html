@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة تفوق - اختبار التواريخ التاريخية</title>
+    <style>
+        :root {
+            --bg-color: #f5f7fb;
+            --card-bg: #ffffff;
+            --primary: #2b5cb7;
+            --secondary: #10ac84;
+            --danger: #ee5253;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            --border-color: #dfe6e9;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .quiz-container {
+            width: 100%;
+            max-width: 750px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            overflow: hidden;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .category-select {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .cat-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 15px;
+        }
+
+        .cat-btn.active, .cat-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+
+        .quiz-box {
+            display: none;
+        }
+
+        .quiz-box.active {
+            display: block;
+        }
+
+        .question-meta {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .question-text {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .options-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            width: 100%;
+            padding: 14px 20px;
+            text-align: right;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.2s ease;
+        }
+
+        .option-btn:hover:not([disabled]) {
+            border-color: var(--primary);
+            background: #edf2fa;
+        }
+
+        .option-btn.correct {
+            background-color: #d4edda !important;
+            border-color: #c3e6cb !important;
+            color: #155724;
+            font-weight: bold;
+        }
+
+        .option-btn.wrong {
+            background-color: #f8d7da !important;
+            border-color: #f5c6cb !important;
+            color: #721c24;
+        }
+
+        .footer-controls {
+            margin-top: 25px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .next-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .results-box {
+            display: none;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .results-box h2 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .score-text {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .restart-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <header>
+        <h1>🏆 منصة المراجعة الذكية للتواريخ</h1>
+        <div class="subtitle">اختر الوحدة وابدأ باختبار معلوماتك</div>
+    </header>
+
+    <!-- اختيار الوحدة الدراسية -->
+    <div class="category-select" id="category-selector">
+        <button class="cat-btn active" onclick="selectUnit(1)">الوحدة 1: الحرب الباردة</button>
+        <button class="cat-btn" onclick="selectUnit(2)">الوحدة 2: الثورة الجزائرية</button>
+    </div>
+
+    <!-- شريط التقدم -->
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progress"></div>
+    </div>
+
+    <!-- منطقة الأسئلة -->
+    <div class="quiz-box active" id="quiz-content">
+        <div class="question-meta" id="q-counter">السؤال 1 من 10</div>
+        <div class="question-text" id="q-text">جاري تحميل السؤال...</div>
+        <div class="options-list" id="options-container">
+            <!-- ستظهر الخيارات هنا عبر الجافاسكريبت -->
+        </div>
+        <div class="footer-controls">
+            <button class="next-btn" id="next-button" onclick="nextQuestion()">السؤال التالي ←</button>
+        </div>
+    </div>
+
+    <!-- شاشة النهاية والنتيجة -->
+    <div class="results-box" id="results-content">
+        <h2>🎉 أحسنت! أكملت الاختبار.</h2>
+        <div class="score-text" id="score-display">لقد أجبت على 0 من 0 أسئلة بشكل صحيح.</div>
+        <button class="restart-btn" onclick="resetQuiz()">إعادة المحاولة 🔄</button>
+    </div>
+</div>
+
+<script>
+// بنك المعلومات مأخوذ بالكامل من بياناتك
+const database = {
+    unit1: [
+        { date: "12 مارس 1947", event: "مبدأ ترومان (مساعدات مالية أمريكية لليونان وتركيا)" },
+        { date: "05 جوان 1947", event: "مشروع مارشال (مساعدات أمريكية لإعادة إعمار أوروبا)" },
+        { date: "22 سبتمبر 1947", event: "مبدأ جدانوف (رد الفعل السوفيتي على المشاريع الأمريكية)" },
+        { date: "06 أكتوبر 1947", event: "تأسيس مكتب الكومنفورم (مكتب الإعلام الشيوعي)" },
+        { date: "25 جانفي 1949", event: "تأسيس منظمة الكوميكون (المجلس الاقتصادي للمعسكر الشرقي)" },
+        { date: "04 أفريل 1949", event: "تأسيس حلف شمال الأطلسي (الناتو - حلف غربي)" },
+        { date: "05 جانفي 1957", event: "مشروع إيزنهاور (مساعدات أمريكية لدول الشرق الأوسط)" },
+        { date: "14 ماي 1955", event: "تأسيس حلف وارسو (الحلف العسكري للمعسكر الشرقي)" },
+        { date: "08 سبتمبر 1954", event: "تأسيس حلف جنوب شرق آسيا (سياتو)" },
+        { date: "24 فيفري 1955", event: "تأسيس حلف بغداد (انتقل لتركيا باسم الحلف المركزي عام 1959)" },
+        { date: "05 مارس 1953", event: "وفاة ستالين (بداية مرحلة التغيير نحو التعايش السلمي)" },
+        { date: "18-24 أفريل 1955", event: "مؤتمر باندونغ بإندونيسيا (تضامن الشعوب الآفروآسيوية)" },
+        { date: "01-06 سبتمبر 1961", event: "تأسيس حركة عدم الانحياز (في مؤتمر بلغراد)" },
+        { date: "24 أكتوبر 1945", event: "التأسيس الرسمي لمنظمة هيئة الأمم المتحدة" },
+        { date: "13 أوت 1961", event: "بناء جدار برلين (ستار حديدي يقسم المدينة)" },
+        { date: "09 نوفمبر 1989", event: "سقوط جدار برلين" },
+        { date: "03-04 ديسمبر 1989", event: "مؤتمر مالطا (نهاية الحرب الباردة بين بوش وغورباتشوف)" },
+        { date: "19-21 نوفمبر 1990", event: "مؤتمر باريس (الإعلان الرسمي عن نهاية الحرب الباردة)" },
+        { date: "28 جوان 1991", event: "حل منظمة الكوميكون" },
+        { date: "01 جويلية 1991", event: "حل حلف وارسو رسمياً" },
+        { date: "21 ديسمبر 1991", event: "قمة ألما آتا وتأسيس مجموعة الدول المستقلة (تفكك السوفييت)" },
+        { date: "25 ديسمبر 1991", event: "استقالة غورباتشوف والزوال الرسمي للاتحاد السوفيتي" }
+    ],
+    unit2: [
+        { date: "23 مارس 1954", event: "تأسيس اللجنة الثورية للوحدة والعمل (CRUA)" },
+        { date: "23 جوان 1954", event: "اجتماع مجموعة 22 التاريخية في العاصمة" },
+        { date: "23 أكتوبر 1954", event: "تأسيس جبهة وجيش التحرير الوطني وضبط تاريخ الثورة" },
+        { date: "01 نوفمبر 1954", event: "اندلاع الثورة التحريرية الكبرى وإصدار بيان أول نوفمبر" },
+        { date: "20 أوت 1955", event: "هجومات الشمال القسنطيني (بقيادة زيغود يوسف)" },
+        { date: "24 فيفري 1956", event: "تأسيس الاتحاد العام للعمال الجزائريين (UGTA)" },
+        { date: "19 ماي 1956", event: "إضراب الطلبة الجزائريين والتحاقهم بالثورة" },
+        { date: "20 أوت 1956", event: "انعقاد مؤتمر الصومام (هيكلة الثورة وتنظيمها)" },
+        { date: "22 أكتوبر 1956", event: "القرصنة الجوية الفرنسية واختطاف طائرة القادة الخمسة" },
+        { date: "28 جانفي - 04 فيفري 1957", event: "إضراب الثمانية أيام (لتأكيد الالتفاف الشعبي حول الثورة)" },
+        { date: "19 سبتمبر 1958", event: "تأسيس الحكومة المؤقتة للجمهورية الجزائرية بالقاهرة" },
+        { date: "03 أكتوبر 1958", event: "إعلان مشروع قسنطينة الاقتصادي (مخطط إغرائي فرنسي)" },
+        { date: "23 أكتوبر 1958", event: "طرح ديغول لمشروع \"سلم الشجعان\" (مخطط استسلامي)" },
+        { date: "16 سبتمبر 1959", event: "اعتراف ديغول بحق الجزائريين في \"تقرير المصير\"" },
+        { date: "13 فيفري 1960", event: "أول تفجير نووي فرنسي في رقان بالصحراء الجزائرية" },
+        { date: "25-29 جوان 1960", event: "محادثات \"مَلان\" (لقاءات تمهيدية فاشلة)" },
+        { date: "11 ديسمبر 1960", event: "المظاهرات الشعبية العارمة في الجزائر (تأكيد رفض فرنسا)" },
+        { date: "20 فيفري 1961", event: "محادثات لوسيرن بسويسرا (محادثات تمهيدية)" },
+        { date: "22 أفريل 1961", event: "انقلاب الجنرالات الأربعة في الجزائر ضد ديغول" },
+        { date: "20 ماي 1961", event: "انطلاق مفاوضات إيفيان الأولى" },
+        { date: "17 أكتوبر 1961", event: "مظاهرات المهاجرين الجزائريين في باريس (ومجزرة نهر السين)" },
+        { date: "07-18 مارس 1962", event: "مفاوضات إيفيان الثانية (توقيع الاتفاقيات)" },
+        { date: "19 مارس 1962", event: "وقف إطلاق النار (عيد النصر)" },
+        { date: "27 ماي - 04 جوان 1962", event: "مؤتمر طرابلس (تحديد خيارات الدولة الجزائرية المستقلة)" },
+        { date: "01 جويلية 1962", event: "استفتاء تقرير المصير" },
+        { date: "05 جويلية 1962", event: "الإعلان الرسمي عن استقلال الجزائر" }
+    ]
+};
+
+let currentPool = [...database.unit1]; 
+let quizQuestions = [];
+let currentIndex = 0;
+let score = 0;
+
+// لخلط الأسئلة والخيارات عشوائياً لضمان عدم التكرار
+function shuffle(array) {
+    return array.sort(() => Math.random() - 0.5);
+}
+
+function selectUnit(unitNum) {
+    const buttons = document.querySelectorAll('.cat-btn');
+    buttons.forEach((b, i) => b.classList.toggle('active', i === unitNum - 1));
+    currentPool = unitNum === 1 ? [...database.unit1] : [...database.unit2];
+    resetQuiz();
+}
+
+function generateQuizQuestions() {
+    let pool = [...currentPool];
+    shuffle(pool);
+    // نأخذ 10 أسئلة فقط من القائمة لكي لا يمل الطالب
+    let selected = pool.slice(0, 10); 
+    
+    quizQuestions = selected.map(item => {
+        // نختار 3 إجابات خاطئة عشوائية من نفس القائمة
+        let wrongAnswers = currentPool
+            .filter(p => p.date !== item.date)
+            .map(p => p.date);
+        shuffle(wrongAnswers);
+        
+        let choices = [item.date, wrongAnswers[0], wrongAnswers[1], wrongAnswers[2]];
+        shuffle(choices);
+        
+        return {
+            event: item.event,
+            correct: item.date,
+            choices: choices
+        };
+    });
+}
+
+function showQuestion() {
+    const nextBtn = document.getElementById('next-button');
+    nextBtn.style.display = 'none';
+    
+    let currentQ = quizQuestions[currentIndex];
+    
+    // تحديث شريط التقدم
+    let progressPercent = ((currentIndex) / quizQuestions.length) * 100;
+    document.getElementById('progress').style.width = `${progressPercent}%`;
+    
+    document.getElementById('q-counter').innerText = `السؤال ${currentIndex + 1} من ${quizQuestions.length}`;
+    document.getElementById('q-text').innerText = `ما هو تاريخ حدث: (${currentQ.event})؟`;
+    
+    const container = document.getElementById('options-container');
+    container.innerHTML = '';
+    
+    currentQ.choices.forEach(choice => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerText = choice;
+        btn.onclick = () => checkAnswer(btn, choice, currentQ.correct);
+        container.appendChild(btn);
+    });
+}
+
+function checkAnswer(selectedBtn, selectedChoice, correctChoice) {
+    const buttons = document.querySelectorAll('.option-btn');
+    buttons.forEach(btn => btn.disabled = true); // قفل الأزرار بعد الاختيار
+    
+    if (selectedChoice === correctChoice) {
+        selectedBtn.classList.add('correct');
+        score++;
+    } else {
+        selectedBtn.classList.add('wrong');
+        // إظهار الإجابة الصحيحة باللون الأخضر للمساعدة في الحفظ
+        buttons.forEach(btn => {
+            if (btn.innerText === correctChoice) btn.classList.add('correct');
+        });
+    }
+    
+    document.getElementById('next-button').style.display = 'block';
+}
+
+function nextQuestion() {
+    currentIndex++;
+    if (currentIndex < quizQuestions.length) {
+        showQuestion();
+    } else {
+        showResults();
+    }
+}
+
+function showResults() {
+    document.getElementById('progress').style.width = '100%';
+    document.getElementById('quiz-content').style.display = 'none';
+    document.getElementById('category-selector').style.display = 'none';
+    
+    const resultsBox = document.getElementById('results-content');
+    resultsBox.style.display = 'block';
+    
+    document.getElementById('score-display').innerText = `لقد أجبت على ${score} من أصل ${quizQuestions.length} أسئلة بشكل صحيح!`;
+}
+
+function resetQuiz() {
+    currentIndex = 0;
+    score = 0;
+    document.getElementById('quiz-content').style.display = 'block';
+    document.getElementById('category-selector').style.display = 'flex';
+    document.getElementById('results-content').style.display = 'none';
+    generateQuizQuestions();
+    showQuestion();
+}
+
+// تشغيل اللعبة لأول مرة تلقائياً
+generateQuizQuestions();
+showQuestion();
+</script>
+
+</body>
+</html>
