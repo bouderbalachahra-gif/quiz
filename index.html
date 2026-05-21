@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة تفوق - اختبار التواريخ التاريخية</title>
+    <title>منصة التحدي المستقبلي للتواريخ | باك 2026</title>
     <style>
         :root {
-            --bg-color: #f5f7fb;
-            --card-bg: #ffffff;
-            --primary: #2b5cb7;
-            --secondary: #10ac84;
-            --danger: #ee5253;
-            --text-dark: #2d3436;
-            --text-light: #636e72;
-            --border-color: #dfe6e9;
+            --bg-glow: #0a0f1d;
+            --card-cyber: #131a30;
+            --neon-blue: #00d2ff;
+            --neon-orange: #ff9f43;
+            --neon-green: #00ffa2;
+            --neon-red: #ff4757;
+            --text-main: #e2e8f0;
+            --text-muted: #8a99ad;
+            --border-cyber: rgba(0, 210, 255, 0.2);
         }
 
         * {
@@ -24,401 +25,584 @@
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-dark);
+            background-color: var(--bg-glow);
+            background-image: 
+                radial-gradient(at 10% 20%, rgba(0, 210, 255, 0.05) 0px, transparent 50%),
+                radial-gradient(at 90% 80%, rgba(255, 159, 67, 0.05) 0px, transparent 50%);
+            color: var(--text-main);
             padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        .quiz-container {
+        .cyber-container {
             width: 100%;
-            max-width: 750px;
-            background: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            padding: 30px;
-            overflow: hidden;
+            max-width: 800px;
+            background: var(--card-cyber);
+            border: 1px solid var(--border-cyber);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.1);
+            padding: 35px;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .cyber-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-orange));
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
         }
 
         header {
             text-align: center;
-            margin-bottom: 25px;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 15px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .logo-frame {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            padding: 5px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-orange));
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+            background: var(--card-cyber);
         }
 
         h1 {
-            color: var(--primary);
             font-size: 24px;
-            margin-bottom: 8px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            background: linear-gradient(90deg, #ffffff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+            line-height: 1.4;
         }
 
         .subtitle {
-            color: var(--text-light);
-            font-size: 14px;
+            color: var(--neon-blue);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
         }
 
-        .category-select {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
+        .unit-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
         }
 
-        .cat-btn {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid var(--primary);
-            background: transparent;
-            color: var(--primary);
-            font-weight: bold;
-            border-radius: 8px;
+        .unit-btn {
+            padding: 14px 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            font-weight: 600;
+            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 14px;
+            text-align: center;
         }
 
-        .cat-btn.active, .cat-btn:hover {
-            background: var(--primary);
-            color: white;
+        .unit-btn:hover {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+            background: rgba(0, 210, 255, 0.05);
         }
 
-        .progress-bar-container {
-            width: 100%;
-            height: 8px;
-            background: var(--border-color);
-            border-radius: 4px;
-            margin-bottom: 20px;
+        .unit-btn.active {
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.2), rgba(0, 210, 255, 0.05));
+            border-color: var(--neon-blue);
+            color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+        }
+
+        .progress-wrapper {
+            background: rgba(255, 255, 255, 0.05);
+            height: 6px;
+            border-radius: 3px;
+            margin-bottom: 30px;
             overflow: hidden;
         }
 
-        .progress-bar {
+        .progress-glow {
             height: 100%;
             width: 0%;
-            background: var(--secondary);
-            transition: width 0.3s ease;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-green));
+            box-shadow: 0 0 10px var(--neon-blue);
+            transition: width 0.4s ease;
         }
 
-        .quiz-box {
+        .quiz-panel {
             display: none;
         }
 
-        .quiz-box.active {
+        .quiz-panel.active {
             display: block;
         }
 
-        .question-meta {
-            color: var(--primary);
-            font-weight: bold;
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-
-        .question-text {
+        .event-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 12px;
             font-size: 18px;
             font-weight: 600;
-            margin-bottom: 20px;
-            line-height: 1.5;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            color: #ffffff;
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.01);
         }
 
-        .options-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
         }
 
-        .option-btn {
-            width: 100%;
-            padding: 14px 20px;
+        @media (max-width: 600px) {
+            .unit-grid { grid-template-columns: 1fr; }
+            .options-grid { grid-template-columns: 1fr; }
+        }
+
+        .option-node {
+            background: rgba(20, 27, 47, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 16px 20px;
             text-align: right;
-            background: var(--bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+            color: var(--text-main);
+            border-radius: 12px;
             cursor: pointer;
             font-size: 15px;
+            font-weight: 500;
             transition: all 0.2s ease;
         }
 
-        .option-btn:hover:not([disabled]) {
-            border-color: var(--primary);
-            background: #edf2fa;
+        .option-node:hover:not([disabled]) {
+            border-color: var(--neon-orange);
+            background: rgba(255, 159, 67, 0.05);
+            transform: translateY(-2px);
         }
 
-        .option-btn.correct {
-            background-color: #d4edda !important;
-            border-color: #c3e6cb !important;
-            color: #155724;
-            font-weight: bold;
+        .option-node.correct {
+            background: rgba(0, 255, 162, 0.1) !important;
+            border-color: var(--neon-green) !important;
+            color: var(--neon-green);
+            box-shadow: 0 0 15px rgba(0, 255, 162, 0.2);
+            font-weight: 700;
         }
 
-        .option-btn.wrong {
-            background-color: #f8d7da !important;
-            border-color: #f5c6cb !important;
-            color: #721c24;
+        .option-node.wrong {
+            background: rgba(255, 71, 87, 0.1) !important;
+            border-color: var(--neon-red) !important;
+            color: var(--neon-red);
+            box-shadow: 0 0 15px rgba(255, 71, 87, 0.2);
         }
 
-        .footer-controls {
-            margin-top: 25px;
+        .control-panel {
+            margin-top: 30px;
             display: flex;
             justify-content: flex-end;
         }
 
-        .next-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            font-size: 15px;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            display: none;
-        }
-
-        .results-box {
-            display: none;
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        .results-box h2 {
-            color: var(--secondary);
-            margin-bottom: 15px;
-        }
-
-        .score-text {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-
-        .restart-btn {
-            background: var(--secondary);
+        .action-cyber-btn {
+            background: linear-gradient(135deg, var(--neon-blue), #0082c8);
             color: white;
             border: none;
             padding: 12px 30px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 8px;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
+            transition: all 0.2s ease;
+            display: none;
+        }
+
+        .action-cyber-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+        }
+
+        .end-panel {
+            display: none;
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .end-panel h2 {
+            color: var(--neon-green);
+            font-size: 28px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(0, 255, 162, 0.3);
+        }
+
+        .score-matrix {
+            font-size: 22px;
+            margin-bottom: 30px;
+            color: var(--text-main);
+        }
+
+        .score-matrix span {
+            color: var(--neon-blue);
+            font-weight: 800;
+        }
+
+        .reload-btn {
+            background: transparent;
+            border: 2px solid var(--neon-orange);
+            color: var(--neon-orange);
+            padding: 14px 35px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .reload-btn:hover {
+            background: var(--neon-orange);
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 159, 67, 0.4);
         }
     </style>
 </head>
 <body>
 
-<div class="quiz-container">
+<div class="cyber-container">
     <header>
-        <h1>🏆 منصة المراجعة الذكية للتواريخ</h1>
-        <div class="subtitle">اختر الوحدة وابدأ باختبار معلوماتك</div>
+        <div class="logo-frame">
+            <img src="logo.png" alt="School Logo" onerror="this.style.display='none'; this.parentNode.innerText='LOGO';">
+        </div>
+        <h1>مدرسة الرهان العلمي تقدم: المنظومة الإلكترونية لتثبيت التواريخ</h1>
+        <div class="subtitle">إحفظ التواريخ بطريقة ذكية</div>
     </header>
 
-    <!-- اختيار الوحدة الدراسية -->
-    <div class="category-select" id="category-selector">
-        <button class="cat-btn active" onclick="selectUnit(1)">الوحدة 1: الحرب الباردة</button>
-        <button class="cat-btn" onclick="selectUnit(2)">الوحدة 2: الثورة الجزائرية</button>
+    <div class="unit-grid" id="unit-selector">
+        <button class="unit-btn active" onclick="switchUnit(1)">الحرب الباردة</button>
+        <button class="unit-btn" onclick="switchUnit(2)">الثورة الجزائرية</button>
+        <button class="unit-btn" onclick="switchUnit(3)">حركات التحرر وفلسطين</button>
     </div>
 
-    <!-- شريط التقدم -->
-    <div class="progress-bar-container">
-        <div class="progress-bar" id="progress"></div>
+    <div class="progress-wrapper">
+        <div class="progress-glow" id="progressBar"></div>
     </div>
 
-    <!-- منطقة الأسئلة -->
-    <div class="quiz-box active" id="quiz-content">
-        <div class="question-meta" id="q-counter">السؤال 1 من 10</div>
-        <div class="question-text" id="q-text">جاري تحميل السؤال...</div>
-        <div class="options-list" id="options-container">
-            <!-- ستظهر الخيارات هنا عبر الجافاسكريبت -->
-        </div>
-        <div class="footer-controls">
-            <button class="next-btn" id="next-button" onclick="nextQuestion()">السؤال التالي ←</button>
+    <div class="quiz-panel active" id="quizPanel">
+        <div class="event-card" id="eventText">جاري استدعاء البيانات...</div>
+        <div class="options-grid" id="optionsGrid">
+            </div>
+        <div class="control-panel">
+            <button class="action-cyber-btn" id="nextBtn" onclick="triggerNext()">التالي 🌐</button>
         </div>
     </div>
 
-    <!-- شاشة النهاية والنتيجة -->
-    <div class="results-box" id="results-content">
-        <h2>🎉 أحسنت! أكملت الاختبار.</h2>
-        <div class="score-text" id="score-display">لقد أجبت على 0 من 0 أسئلة بشكل صحيح.</div>
-        <button class="restart-btn" onclick="resetQuiz()">إعادة المحاولة 🔄</button>
+    <div class="end-panel" id="endPanel">
+        <h2>تمت معالجة البيانات بنجاح نظامي</h2>
+        <div class="score-matrix">معدل الدقة الحركية: <span id="finalScore">00</span> / 10</div>
+        <button class="reload-btn" onclick="rebootQuiz()">إعادة تشغيل المحاكاة 🔄</button>
     </div>
 </div>
 
 <script>
-// بنك المعلومات مأخوذ بالكامل من بياناتك
-const database = {
+const DATA_STORE = {
     unit1: [
-        { date: "12 مارس 1947", event: "مبدأ ترومان (مساعدات مالية أمريكية لليونان وتركيا)" },
-        { date: "05 جوان 1947", event: "مشروع مارشال (مساعدات أمريكية لإعادة إعمار أوروبا)" },
-        { date: "22 سبتمبر 1947", event: "مبدأ جدانوف (رد الفعل السوفيتي على المشاريع الأمريكية)" },
-        { date: "06 أكتوبر 1947", event: "تأسيس مكتب الكومنفورم (مكتب الإعلام الشيوعي)" },
-        { date: "25 جانفي 1949", event: "تأسيس منظمة الكوميكون (المجلس الاقتصادي للمعسكر الشرقي)" },
-        { date: "04 أفريل 1949", event: "تأسيس حلف شمال الأطلسي (الناتو - حلف غربي)" },
-        { date: "05 جانفي 1957", event: "مشروع إيزنهاور (مساعدات أمريكية لدول الشرق الأوسط)" },
-        { date: "14 ماي 1955", event: "تأسيس حلف وارسو (الحلف العسكري للمعسكر الشرقي)" },
-        { date: "08 سبتمبر 1954", event: "تأسيس حلف جنوب شرق آسيا (سياتو)" },
-        { date: "24 فيفري 1955", event: "تأسيس حلف بغداد (انتقل لتركيا باسم الحلف المركزي عام 1959)" },
-        { date: "05 مارس 1953", event: "وفاة ستالين (بداية مرحلة التغيير نحو التعايش السلمي)" },
-        { date: "18-24 أفريل 1955", event: "مؤتمر باندونغ بإندونيسيا (تضامن الشعوب الآفروآسيوية)" },
-        { date: "01-06 سبتمبر 1961", event: "تأسيس حركة عدم الانحياز (في مؤتمر بلغراد)" },
+        { date: "14 أوت 1941", event: "توقيع الميثاق الأطلسي بين الولايات المتحدة الأمريكية وبريطانيا" },
+        { date: "04-11 فبراير 1945", event: "انعقاد مؤتمر يالطا بين روزفلت، ستالين، وتشرتشل" },
+        { date: "16 جويلية 1945", event: "اكتشاف الولايات المتحدة الأمريكية للسلاح الذري" },
+        { date: "26 جوان 1945", event: "المصادقة على ميثاق هيئة الأمم المتحدة" },
+        { date: "17 جويلية - 02 أوت 1945", event: "انعقاد مؤتمر بوتسدام بين الولايات المتحدة، بريطانيا، والاتحاد السوفيتي" },
+        { date: "22 جويلية 1944", event: "تأسيس صندوق النقد الدولي (بريتون وودز)" },
+        { date: "06 أوت 1945", event: "إلقاء القنبلة الذرية على هيروشيما في اليابان" },
+        { date: "09 أوت 1945", event: "إلقاء القنبلة الذرية على ناغازاكي في اليابان" },
         { date: "24 أكتوبر 1945", event: "التأسيس الرسمي لمنظمة هيئة الأمم المتحدة" },
-        { date: "13 أوت 1961", event: "بناء جدار برلين (ستار حديدي يقسم المدينة)" },
-        { date: "09 نوفمبر 1989", event: "سقوط جدار برلين" },
-        { date: "03-04 ديسمبر 1989", event: "مؤتمر مالطا (نهاية الحرب الباردة بين بوش وغورباتشوف)" },
-        { date: "19-21 نوفمبر 1990", event: "مؤتمر باريس (الإعلان الرسمي عن نهاية الحرب الباردة)" },
-        { date: "28 جوان 1991", event: "حل منظمة الكوميكون" },
-        { date: "01 جويلية 1991", event: "حل حلف وارسو رسمياً" },
-        { date: "21 ديسمبر 1991", event: "قمة ألما آتا وتأسيس مجموعة الدول المستقلة (تفكك السوفييت)" },
-        { date: "25 ديسمبر 1991", event: "استقالة غورباتشوف والزوال الرسمي للاتحاد السوفيتي" }
+        { date: "05 مارس 1946", event: "إعلان تشرتشل عن مصطلح الستار الحديدي" },
+        { date: "12 مارس 1947", event: "إعلان مبدأ ترومان (المساعدات المالية لليونان وتركيا)" },
+        { date: "05 جوان 1947", event: "إعلان مشروع مارشال لإعادة إعمار أوروبا" },
+        { date: "18 سبتمبر 1947", event: "تأسيس وكالة المخابرات المركزية الأمريكية CIA" },
+        { date: "22 سبتمبر 1947", event: "إعلان مبدأ جدانوف السوفيتي" },
+        { date: "06 أكتوبر 1947", event: "تأسيس مكتب الكومنفورم (مكتب الإعلام الشيوعي)" },
+        { date: "23 جوان 1948", event: "حصار برلين من طرف الاتحاد السوفيتي" },
+        { date: "26 جوان 1948", event: "إنشاء الجسر الجوي إلى برلين من أجل فك الحصار" },
+        { date: "28 جوان 1948", event: "انسحاب يوغوسلافيا من مكتب الكومنفورم" },
+        { date: "23 ماي 1949", event: "تأسيس دولة ألمانيا الفدرالية الغربية" },
+        { date: "12 ماي 1949", event: "رفع الحصار عن مدينة برلين" },
+        { date: "07 أكتوبر 1949", event: "تأسيس دولة ألمانيا الديمقراطية الشرقية" },
+        { date: "25 جانفي 1949", event: "تأسيس منظمة الكوميكون (المجلس الاقتصادي للمعسكر الشرقي)" },
+        { date: "04 أفريل 1949", event: "تأسيس الحلف الأطلسي (الناتو - حلف غربي)" },
+        { date: "29 سبتمبر 1949", event: "تفجير أول قنبلة ذرية سوفياتية" },
+        { date: "01 أكتوبر 1949", event: "انتصار الثورة الشيوعية في الصين وتأسيس الجمهوريتها" },
+        { date: "25 جوان 1950", event: "اجتياح كوريا الشمالية لكوريا الجنوبية وبداية الحرب الكورية" },
+        { date: "20 نوفمبر 1952", event: "وصول إيزنهاور إلى سدة الحكم في الولايات المتحدة" },
+        { date: "27 جويلية 1953", event: "نهاية الحرب الكورية (توقيع الهدنة)" },
+        { date: "08 سبتمبر 1954", event: "تأسيس حلف جنوب شرق آسيا (سياتو)" },
+        { date: "24 فيفري 1955", event: "تأسيس حلف بغداد العسكري" },
+        { date: "18-24 أفريل 1955", event: "انعقاد مؤتمر باندونغ بإندونيسيا" },
+        { date: "13 ماي 1955", event: "اعتراف الاتحاد السوفيتي بألمانيا الغربية" },
+        { date: "14 ماي 1955", event: "تأسيس حلف وارسو (الحلف العسكري للمعسكر الشرقي)" },
+        { date: "27 سبتمبر 1955", event: "صفقة الأسلحة التشيكوسلوفاكية (الشرقية) مع مصر" },
+        { date: "17 أفريل 1956", event: "حل مكتب الكومنفورم الشيوعي" },
+        { date: "26 جويلية 1956", event: "إعلان جمال عبد الناصر عن تأميم قناة السويس" },
+        { date: "29 أكتوبر 1956", event: "بداية العدوان الثلاثي على مصر" },
+        { date: "05 نوفمبر 1956", event: "تهديد الاتحاد السوفيتي باستخدام السلاح النووي ضد دول العدوان" },
+        { date: "05 جانفي 1957", event: "إعلان مشروع إيزنهاور لمساعدات الشرق الأوسط" },
+        { date: "22 ديسمبر 1956", event: "انسحاب القوات الفرنسية والبريطانية من بورسعيد" },
+        { date: "07 مارس 1957", event: "انسحاب إسرائيل من سيناء وقطاع غزة" },
+        { date: "27 نوفمبر 1958", event: "إنذار السوفيات بجعل مدينة برلين مدينة حرة" },
+        { date: "21 فيفري 1959", event: "زيارة رئيس الوزراء البريطاني هيرولد ماكميلان إلى موسكو" },
+        { date: "15-27 سبتمبر 1959", event: "زيارة خروتشوف التاريخية إلى واشنطن" },
+        { date: "12 أفريل 1961", event: "أول رحلة لغزو الفضاء من طرف السوفياتي يوري غاغارين" },
+        { date: "13 أوت 1961", event: "بناء وإقامة جدار برلين" },
+        { date: "01-06 سبتمبر 1961", event: "انعقاد مؤتمر بلغراد وتأسيس حركة عدم الانحياز" },
+        { date: "03 فيفري 1962", event: "فرض الحصار الاقتصادي الأمريكي الشامل على كوبا" },
+        { date: "14 أكتوبر 1962", event: "التقاط طائرة التجسس الأمريكية صوراً للصواريخ السوفيتية في كوبا" },
+        { date: "22 أكتوبر 1962", event: "فرض الحصار العسكري البحري على كوبا من طرف أمريكا" },
+        { date: "28 أكتوبر 1962", event: "قرار سحب السوفيات للصواريخ من كوبا ونهاية الأزمة" },
+        { date: "20 جوان 1963", event: "إنشاء الخط الهاتفي الأحمر بين البيت الأبيض والكرملين" },
+        { date: "22 نوفمبر 1963", event: "اغتيال الرئيس الأمريكي جون كينيدي" },
+        { date: "14 أكتوبر 1964", event: "وصول ليونيد بريجنيف إلى الحكم في الاتحاد السوفيتي" },
+        { date: "07 مارس 1966", event: "انسحاب فرنسا من القيادة العسكرية للحلف الأطلسي" },
+        { date: "25 أكتوبر 1971", event: "صدور القرار الدولي رقم 2758 والاعتراف بجمهورية الصين الشعبية" },
+        { date: "26 ماي 1972", event: "التوقيع على معاهدة سالت 1 للحد من الأسلحة الاستراتيجية" },
+        { date: "18 جوان 1979", event: "التوقيع على اتفاقية سالت 2 في فيينا" },
+        { date: "20 جانفي 1981", event: "وصول رونالد ريغان إلى الحكم في الولايات المتحدة" },
+        { date: "23 مارس 1983", event: "اقتراح ريغان مبادرة الدفاع الاستراتيجي المعروفة بـ (حرب النجوم)" },
+        { date: "11 مارس 1985", event: "وصول ميخائيل غورباتشوف إلى السلطة في الاتحاد السوفيتي" },
+        { date: "09 نوفمبر 1989", event: "سقوط جدار برلين التاريخي" },
+        { date: "03-04 ديسمبر 1989", event: "انعقاد قمة مالطا بين جورج بوش وميخائيل غورباتشوف" },
+        { date: "03 أكتوبر 1990", event: "توحيد الألمانيتين رسمياً" },
+        { date: "19-21 نوفمبر 1990", event: "انعقاد ندوة باريس والإعلان الرسمي عن نهاية الحرب الباردة" },
+        { date: "28 جوان 1991", event: "حل منظمة الكوميكون الاقتصادية الشرقية" },
+        { date: "01 جويلية 1991", event: "حل حلف وارسو العسكري رسمياً" },
+        { date: "29 أوت 1991", event: "حل وتجميد نشاط الحزب الشيوعي السوفيتي" },
+        { date: "21 ديسمبر 1991", event: "قمة ألما آتا وتأسيس مجموعة الدول المستقلة" },
+        { date: "25 ديسمبر 1991", event: "استقالة غورباتشوف والزوال الرسمي التام للاتحاد السوفيتي" }
     ],
     unit2: [
-        { date: "23 مارس 1954", event: "تأسيس اللجنة الثورية للوحدة والعمل (CRUA)" },
-        { date: "23 جوان 1954", event: "اجتماع مجموعة 22 التاريخية في العاصمة" },
-        { date: "23 أكتوبر 1954", event: "تأسيس جبهة وجيش التحرير الوطني وضبط تاريخ الثورة" },
-        { date: "01 نوفمبر 1954", event: "اندلاع الثورة التحريرية الكبرى وإصدار بيان أول نوفمبر" },
-        { date: "20 أوت 1955", event: "هجومات الشمال القسنطيني (بقيادة زيغود يوسف)" },
+        { date: "10 فيفري 1943", event: "تحرير بيان فيفري الموجّه للحلفاء وحكومة فرنسا الحرة" },
+        { date: "08 ماي 1945", event: "مجازر 08 ماي في سطيف، قالمة، وخراطة (45 ألف شهيد)" },
+        { date: "09 مارس 1946", event: "إصدار قانون العفو العام الفرنسي وإطلاق سراح القادة" },
+        { date: "17 أفريل 1946", event: "تأسيس الاتحاد الديمقراطي للبيان الجزائري بزعامة فرحات عباس" },
+        { date: "02 نوفمبر 1946", event: "تأسيس حركة انتصار الحريات الديمقراطية (MTLD)" },
+        { date: "15 فيفري 1947", event: "إنشاء وتأسيس المنظمة الخاصة (L'OS) الجناح العسكري السرّي" },
+        { date: "20 سبتمبر 1947", event: "إصدار القانون الخاص بالجزائر والمسمى (دستور الجزائر 1947)" },
+        { date: "28 مارس 1950", event: "اكتشاف السلطات الاستعمارية لأمر المنظمة الخاصة وحلها" },
+        { date: "05 أوت 1951", event: "تأسيس الجبهة الجزائرية للدفاع عن الحرية وصونها" },
+        { date: "23 مارس 1954", event: "إنشاء اللجنة الثورية للوحدة والعمل (CRUA)" },
+        { date: "23 جوان 1954", event: "انعقاد اجتماع مجموعة 22 التاريخية في صالومبي بالعاصمة" },
+        { date: "23 أكتوبر 1954", event: "اجتماع لجنة الستة (06) وحسم تأسيس جبهة التحرير وموعد الثورة" },
+        { date: "01 نوفمبر 1954", event: "اندلاع الثورة التحريرية الجزائرية الكبرى وإصدار بيان أول نوفمبر" },
+        { date: "25 جانفي 1955", event: "تعيين جاك سوستيل والياً عاماً فرنسياً على الجزائر" },
+        { date: "03 أفريل 1955", event: "إعلان فرنسا حالة الطوارئ في عموم القطر الجزائري" },
+        { date: "20 أوت 1955", event: "هجومات الشمال القسنطيني التاريخية بقيادة البطل زيغود يوسف" },
         { date: "24 فيفري 1956", event: "تأسيس الاتحاد العام للعمال الجزائريين (UGTA)" },
-        { date: "19 ماي 1956", event: "إضراب الطلبة الجزائريين والتحاقهم بالثورة" },
-        { date: "20 أوت 1956", event: "انعقاد مؤتمر الصومام (هيكلة الثورة وتنظيمها)" },
-        { date: "22 أكتوبر 1956", event: "القرصنة الجوية الفرنسية واختطاف طائرة القادة الخمسة" },
-        { date: "28 جانفي - 04 فيفري 1957", event: "إضراب الثمانية أيام (لتأكيد الالتفاف الشعبي حول الثورة)" },
-        { date: "19 سبتمبر 1958", event: "تأسيس الحكومة المؤقتة للجمهورية الجزائرية بالقاهرة" },
-        { date: "03 أكتوبر 1958", event: "إعلان مشروع قسنطينة الاقتصادي (مخطط إغرائي فرنسي)" },
-        { date: "23 أكتوبر 1958", event: "طرح ديغول لمشروع \"سلم الشجعان\" (مخطط استسلامي)" },
-        { date: "16 سبتمبر 1959", event: "اعتراف ديغول بحق الجزائريين في \"تقرير المصير\"" },
-        { date: "13 فيفري 1960", event: "أول تفجير نووي فرنسي في رقان بالصحراء الجزائرية" },
-        { date: "25-29 جوان 1960", event: "محادثات \"مَلان\" (لقاءات تمهيدية فاشلة)" },
-        { date: "11 ديسمبر 1960", event: "المظاهرات الشعبية العارمة في الجزائر (تأكيد رفض فرنسا)" },
-        { date: "20 فيفري 1961", event: "محادثات لوسيرن بسويسرا (محادثات تمهيدية)" },
-        { date: "22 أفريل 1961", event: "انقلاب الجنرالات الأربعة في الجزائر ضد ديغول" },
-        { date: "20 ماي 1961", event: "انطلاق مفاوضات إيفيان الأولى" },
-        { date: "17 أكتوبر 1961", event: "مظاهرات المهاجرين الجزائريين في باريس (ومجزرة نهر السين)" },
-        { date: "07-18 مارس 1962", event: "مفاوضات إيفيان الثانية (توقيع الاتفاقيات)" },
-        { date: "19 مارس 1962", event: "وقف إطلاق النار (عيد النصر)" },
-        { date: "27 ماي - 04 جوان 1962", event: "مؤتمر طرابلس (تحديد خيارات الدولة الجزائرية المستقلة)" },
-        { date: "01 جويلية 1962", event: "استفتاء تقرير المصير" },
-        { date: "05 جويلية 1962", event: "الإعلان الرسمي عن استقلال الجزائر" }
+        { date: "24 فيفري 1956", event: "اكتشاف البترول في منطقة حاسي مسعود بالصحراء الجزائرية" },
+        { date: "20 أوت 1956", event: "انعقاد مؤتمر الصومام التاريخي بمنطقة إيفري وادي الصومام" },
+        { date: "22 أكتوبر 1956", event: "القرصنة الجوية الفرنسية واختطاف طائرة القادة الخمسة للثورة" },
+        { date: "07 جانفي 1957", event: "بدء معركة الجزائر الشهيرة بقيادة الجنرال ماسو" },
+        { date: "13 ماي 1958", event: "تمرد المستوطنين والجيش الفرنسي في الجزائر ضد حكومة باريس" },
+        { date: "19 سبتمبر 1958", event: "تأسيس الحكومة المؤقتة للجمهورية الجزائرية بالقاهرة برئاسة فرحات عباس" },
+        { date: "08 فيفري 1958", event: "قصف الطيران الفرنسي لقرية ساقية سيدي يوسف الحدودية مع تونس" },
+        { date: "04 أكتوبر 1958", event: "إعلان الجنرال ديغول عن مشروع قسنطينة الاقتصادي الإغرائي" },
+        { date: "23 أكتوبر 1958", event: "طرح ديغول لمشروع سلم الشجعان (مخطط الاستسلام)" },
+        { date: "01 جوان 1958", event: "قيام الجمهورية الفرنسية الخامسة بزعامة شارل ديغول" },
+        { date: "25-29 جوان 1960", event: "محادثات ملان بفرنسا (لقاءات تمهيدية أولى فاشلة)" },
+        { date: "11 ديسمبر 1960", event: "المظاهرات الشعبية التاريخية العارمة الداعمة لجبهة التحرير" },
+        { date: "19 ديسمبر 1960", event: "اعتراف الجمعية العامة لهيئة الأمم المتحدة بحق الشعب الجزائري في تقرير مصيره" },
+        { date: "13 فيفري 1960", event: "فرنسا تفجر أول قنبلة ذرية سطحيّة لها في رقان بالصحراء" },
+        { date: "21 أفريل 1961", event: "انقلاب الجنرالات الأربعة (الضباط الفرنسيين المتشددين) في الجزائر ضد ديغول" },
+        { date: "17 أكتوبر 1961", event: "مظاهرات المهاجرين الجزائريين بباريس (ومجزرة نهر السين الشهيرة)" },
+        { date: "20 جويلية 1961", event: "استئناف المفاوضات الرسمية في قصر لوغران" },
+        { date: "20 فيفري 1961", event: "انطلاق محادثات لوسيرن التمهيدية بسويسرا" },
+        { date: "11-19 فيفري 1962", event: "لقاء لي روس السري بالحدود السويسرية واستمرار التفاوض" },
+        { date: "07-18 مارس 1962", event: "انعقاد مفاوضات إيفيان الثانية وتوقيع الاتفاقيات الشاملة" },
+        { date: "19 مارس 1962", event: "دخول اتفاق وقف إطلاق النار حيز التنفيذ (عيد النصر)" },
+        { date: "27 ماي - 02 جوان 1962", event: "انعقاد مؤتمر طرابلس بليبيا لتحديد خيارات الدولة المستقلة" },
+        { date: "01 جويلية 1962", event: "تنظيم استفتاء تقرير المصير للشعب الجزائري" },
+        { date: "03 جويلية 1962", event: "اعتراف الجنرال ديغول رسمياً باستقلال الجزائر" },
+        { date: "05 جويلية 1962", event: "الإعلان الرسمي عن استقلال الجزائر (عيد الاستقلال الوطني)" },
+        { date: "20 سبتمبر 1962", event: "انتخاب أعضاء المجلس الوطني التأسيسي الجزائري الأول" },
+        { date: "25 سبتمبر 1962", event: "الإعلان الرسمي عن قيام الجمهورية الجزائرية الديمقراطية الشعبية برئاسة بن بلة" },
+        { date: "08 أكتوبر 1962", event: "انضمام الجزائر رسمياً إلى هيئة الأمم المتحدة" },
+        { date: "19 جوان 1965", event: "الانقلاب العسكري بقيادة هواري بومدين (التصحيح الثوري)" },
+        { date: "27 ديسمبر 1978", event: "وفاة الرئيس هواري بومدين وحل مجلس الثورة" },
+        { date: "27 فيفري 1979", event: "وصول الشاذلي بن جديد إلى سدة الحكم ورئاسة الجمهورية" },
+        { date: "05 أكتوبر 1988", event: "أحداث شغب واضطرابات أكتوبر ببعض المدن الجزائرية الكبرى" },
+        { date: "23 فيفري 1989", event: "صدور الدستور الجديد الذي أقرّ التعددية الحزبية والسياسية في الجزائر" }
+    ],
+    unit3: [
+        { date: "11 ديسمبر 1931", event: "التأسيس الرسمي لمنظمة الدول الناطقة بالإنجليزية (الكومنولث)" },
+        { date: "15 أوت 1947", event: "استقلال الهند وباكستان رسمياً عن التاج البريطاني" },
+        { date: "22 مارس 1945", event: "تأسيس جامعة الدول العربية بالقاهرة" },
+        { date: "23 جويلية 1952", event: "قيام الثورة المصرية ضد النظام الملكي (حركة الضباط الأحرار)" },
+        { date: "07 ماي 1954", event: "انتصار الفيتناميين الساحق على القوات الفرنسية في معركة ديان بيان فو" },
+        { date: "20 جويلية 1954", event: "انعقاد مؤتمر جنيف الخاص بالهند الصينية وتوقيع اتفاقيات السلام" },
+        { date: "25 ماي 1963", event: "تأسيس منظمة الوحدة الأفريقية في أديس أبابا" },
+        { date: "08 جانفي 1959", event: "دخول فيدال كاسترو هافانا وانتصار الثورة الكوبية الشيوعية" },
+        { date: "20 مارس 1970", event: "تأسيس وكالة التعاون الثقافي والتقني (منظمة الفرانكفونية لاحقاً)" },
+        { date: "02 أوت 1990", event: "غزو العراق للكويت واندلاع حرب الخليج الثانية" },
+        { date: "29 أوت 1897", event: "انعقاد مؤتمر بال بسويسرا وتأسيس الحركة الصهيونية العالمية بزعامة هرتزل" },
+        { date: "02 نوفمبر 1917", event: "صدور وعد بلفور البريطاني المشؤوم لليهود" },
+        { date: "29 نوفمبر 1947", event: "صدور قرار هيئة الأمم المتحدة رقم 181 القاضي بتقسيم فلسطين" },
+        { date: "14 ماي 1948", event: "إنهاء الانتداب البريطاني والانسحاب الرسمي من الأراضي الفلسطينية" },
+        { date: "15 ماي 1948", event: "إعلان ديفيد بن غوريون قيام دولة إسرائيل واندلاع الحرب العربية الإسرائيلية الأولى" },
+        { date: "24 فيفري 1949", event: "توقيع اتفاقية هدنة رودس بين الدول العربية وإسرائيل" },
+        { date: "09 أفريل 1948", event: "ارتكاب الصهاينة لمجزرة دير ياسين البشعة ضد المدنيين" },
+        { date: "11 ماي 1949", event: "قبول إسرائيل رسمياً كعضو في منظمة هيئة الأمم المتحدة" },
+        { date: "28 ماي 1964", event: "تأسيس منظمة التحرير الفلسطينية (PLO) خلال المؤتمر العربي بالقدس" },
+        { date: "01 جانفي 1965", event: "انطلاق الثورة الفلسطينية المسلحة (حركة فتح والجناح العسكري)" },
+        { date: "05 جوان 1967", event: "اندلاع حرب الستة أيام (النكسة) واحتلال إسرائيل لسيناء، الجولان، والضفة الغربية" },
+        { date: "22 نوفمبر 1967", event: "صدور قرار مجلس الأمن الدولي رقم 242 الداعي لانسحاب إسرائيل" },
+        { date: "06 أكتوبر 1973", event: "اندلاع حرب أكتوبر (رمضان) المجيدة وتفوق الجيشين المصري والسوري" },
+        { date: "17 أكتوبر 1973", event: "قرار وزراء النفط العرب حظر وتخفيض تصدير النفط للدول المساندة لإسرائيل" },
+        { date: "22 أكتوبر 1973", event: "صدور قرار مجلس الأمن الدولي رقم 338 لوقف إطلاق النار" },
+        { date: "14 نوفمبر 1974", event: "منح منظمة التحرير الفلسطينية صفة عضو مراقب في الأمم المتحدة وخطاب عرفات" },
+        { date: "17 سبتمبر 1978", event: "توقيع اتفاقيات كامب ديفيد للسلام بين مصر وإسرائيل" },
+        { date: "06 جوان 1982", event: "الغزو الإسرائيلي للبنان واجتياح بيروت لطرد المقاومة الفلسطينية" },
+        { date: "08 ديسمبر 1987", event: "اندلاع انتفاضة أطفال الحجارة الفلسطينية الأولى في قطاع غزة والضفة" },
+        { date: "15 نوفمبر 1988", event: "الإعلان التاريخي عن قيام دولة فلسطين في مؤتمر المجلس الوطني بالجزائر" },
+        { date: "30 أكتوبر - 03 نوفمبر 1991", event: "انعقاد مؤتمر مدريد الدولي للسلام في الشرق الأوسط" },
+        { date: "13 سبتمبر 1993", event: "توقيع اتفاقية أوسلو للسلام (غزة - أريحا أولاً) في واشنطن" }
     ]
 };
 
-let currentPool = [...database.unit1]; 
-let quizQuestions = [];
+let activePool = [...DATA_STORE.unit1];
+let sessionQuestions = [];
 let currentIndex = 0;
-let score = 0;
+let totalCorrect = 0;
 
-// لخلط الأسئلة والخيارات عشوائياً لضمان عدم التكرار
-function shuffle(array) {
-    return array.sort(() => Math.random() - 0.5);
+function shuffleArr(targetArray) {
+    return targetArray.sort(() => Math.random() - 0.5);
 }
 
-function selectUnit(unitNum) {
-    const buttons = document.querySelectorAll('.cat-btn');
-    buttons.forEach((b, i) => b.classList.toggle('active', i === unitNum - 1));
-    currentPool = unitNum === 1 ? [...database.unit1] : [...database.unit2];
-    resetQuiz();
-}
-
-function generateQuizQuestions() {
-    let pool = [...currentPool];
-    shuffle(pool);
-    // نأخذ 10 أسئلة فقط من القائمة لكي لا يمل الطالب
-    let selected = pool.slice(0, 10); 
+function switchUnit(unitID) {
+    const selectorButtons = document.querySelectorAll('.unit-btn');
+    selectorButtons.forEach((btn, idx) => btn.classList.toggle('active', idx === unitID - 1));
     
-    quizQuestions = selected.map(item => {
-        // نختار 3 إجابات خاطئة عشوائية من نفس القائمة
-        let wrongAnswers = currentPool
-            .filter(p => p.date !== item.date)
-            .map(p => p.date);
-        shuffle(wrongAnswers);
+    if(unitID === 1) activePool = [...DATA_STORE.unit1];
+    else if(unitID === 2) activePool = [...DATA_STORE.unit2];
+    else activePool = [...DATA_STORE.unit3];
+    
+    rebootQuiz();
+}
+
+function compileSessionData() {
+    let localPool = [...activePool];
+    shuffleArr(localPool);
+    let chosenPool = localPool.slice(0, 10); 
+    
+    sessionQuestions = chosenPool.map(node => {
+        let decoys = activePool
+            .filter(element => element.date !== node.date)
+            .map(element => element.date);
+        shuffleArr(decoys);
         
-        let choices = [item.date, wrongAnswers[0], wrongAnswers[1], wrongAnswers[2]];
-        shuffle(choices);
+        let mixedChoices = [node.date, decoys[0], decoys[1], decoys[2]];
+        shuffleArr(mixedChoices);
         
         return {
-            event: item.event,
-            correct: item.date,
-            choices: choices
+            eventText: node.event,
+            correctDate: node.date,
+            allOptions: mixedChoices
         };
     });
 }
 
-function showQuestion() {
-    const nextBtn = document.getElementById('next-button');
-    nextBtn.style.display = 'none';
+function renderQuestion() {
+    document.getElementById('nextBtn').style.display = 'none';
+    let currentQuestionNode = sessionQuestions[currentIndex];
     
-    let currentQ = quizQuestions[currentIndex];
+    let currentProgress = (currentIndex / sessionQuestions.length) * 100;
+    document.getElementById('progressBar').style.width = `${currentProgress}%`;
     
-    // تحديث شريط التقدم
-    let progressPercent = ((currentIndex) / quizQuestions.length) * 100;
-    document.getElementById('progress').style.width = `${progressPercent}%`;
+    document.getElementById('eventText').innerText = `تحديد تاريخ الحدث: [ ${currentQuestionNode.eventText} ]`;
     
-    document.getElementById('q-counter').innerText = `السؤال ${currentIndex + 1} من ${quizQuestions.length}`;
-    document.getElementById('q-text').innerText = `ما هو تاريخ حدث: (${currentQ.event})؟`;
+    const containerGrid = document.getElementById('optionsGrid');
+    containerGrid.innerHTML = '';
     
-    const container = document.getElementById('options-container');
-    container.innerHTML = '';
-    
-    currentQ.choices.forEach(choice => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.innerText = choice;
-        btn.onclick = () => checkAnswer(btn, choice, currentQ.correct);
-        container.appendChild(btn);
+    currentQuestionNode.allOptions.forEach(choiceText => {
+        const optionButton = document.createElement('button');
+        optionButton.className = 'option-node';
+        optionButton.innerText = choiceText;
+        optionButton.onclick = () => verifySelection(optionButton, choiceText, currentQuestionNode.correctDate);
+        containerGrid.appendChild(optionButton);
     });
 }
 
-function checkAnswer(selectedBtn, selectedChoice, correctChoice) {
-    const buttons = document.querySelectorAll('.option-btn');
-    buttons.forEach(btn => btn.disabled = true); // قفل الأزرار بعد الاختيار
+function verifySelection(clickedElement, userChoice, correctChoice) {
+    const allGridButtons = document.querySelectorAll('.option-node');
+    allGridButtons.forEach(btn => btn.disabled = true);
     
-    if (selectedChoice === correctChoice) {
-        selectedBtn.classList.add('correct');
-        score++;
+    if (userChoice === correctChoice) {
+        clickedElement.classList.add('correct');
+        totalCorrect++;
     } else {
-        selectedBtn.classList.add('wrong');
-        // إظهار الإجابة الصحيحة باللون الأخضر للمساعدة في الحفظ
-        buttons.forEach(btn => {
+        clickedElement.classList.add('wrong');
+        allGridButtons.forEach(btn => {
             if (btn.innerText === correctChoice) btn.classList.add('correct');
         });
     }
     
-    document.getElementById('next-button').style.display = 'block';
+    document.getElementById('nextBtn').style.display = 'block';
 }
 
-function nextQuestion() {
+function triggerNext() {
     currentIndex++;
-    if (currentIndex < quizQuestions.length) {
-        showQuestion();
+    if (currentIndex < sessionQuestions.length) {
+        renderQuestion();
     } else {
-        showResults();
+        renderEvaluation();
     }
 }
 
-function showResults() {
-    document.getElementById('progress').style.width = '100%';
-    document.getElementById('quiz-content').style.display = 'none';
-    document.getElementById('category-selector').style.display = 'none';
+function renderEvaluation() {
+    document.getElementById('progressBar').style.width = '100%';
+    document.getElementById('quizPanel').style.display = 'none';
+    document.getElementById('unit-selector').style.display = 'none';
     
-    const resultsBox = document.getElementById('results-content');
-    resultsBox.style.display = 'block';
+    const finalView = document.getElementById('endPanel');
+    finalView.style.display = 'block';
     
-    document.getElementById('score-display').innerText = `لقد أجبت على ${score} من أصل ${quizQuestions.length} أسئلة بشكل صحيح!`;
+    document.getElementById('finalScore').innerText = totalCorrect < 10 ? `0${totalCorrect}` : totalCorrect;
 }
 
-function resetQuiz() {
+function rebootQuiz() {
     currentIndex = 0;
-    score = 0;
-    document.getElementById('quiz-content').style.display = 'block';
-    document.getElementById('category-selector').style.display = 'flex';
-    document.getElementById('results-content').style.display = 'none';
-    generateQuizQuestions();
-    showQuestion();
+    totalCorrect = 0;
+    document.getElementById('quizPanel').style.display = 'block';
+    document.getElementById('unit-selector').style.display = 'grid';
+    document.getElementById('endPanel').style.display = 'none';
+    compileSessionData();
+    renderQuestion();
 }
 
-// تشغيل اللعبة لأول مرة تلقائياً
-generateQuizQuestions();
-showQuestion();
+// البدء التلقائي للموقع عند التشغيل لأول مرة
+compileSessionData();
+renderQuestion();
 </script>
 
 </body>
